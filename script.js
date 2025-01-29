@@ -3,11 +3,13 @@ const subtract = (x, y) => x - y;
 const multiply = (x, y) => x * y; 
 const divide = (x, y) => x / y;
 
-let inputStack = [NULL, NULL, NULL];
+let inputStack = [null, null, null];
 let curr = 0; 
 
 
-function operate(op, num1, num2) {
-    return op(num1, num2);
-}
-
+let buttons = document.querySelectorAll("button");
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        console.log(button.textContent);
+    })
+});

@@ -1,6 +1,6 @@
-const add = (x, y) => x + y; 
+const add = (x, y) => x + y;
 const subtract = (x, y) => x - y;
-const multiply = (x, y) => x * y; 
+const multiply = (x, y) => x * y;
 const divide = (x, y) => x / y;
 
 let acc = ""; // accumulator for stored value
@@ -9,11 +9,10 @@ let operator = ""; // operator to be used in calculation
 
 let buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
-    button.addEventListener("click", () => {
-        handleInput(button.textContent);
-    })
+  button.addEventListener("click", () => {
+    handleInput(button.textContent);
+  });
 });
-
 
 /* 
 1. User clicks on a number, append to curr
@@ -23,65 +22,75 @@ buttons.forEach((button) => {
     - Set new operator 
 */
 
-
 function handleInput(input) {
-    switch (input) {
-        case "C":
-            acc = ""; 
-            curr = "";
-            operator = ""; 
-            break;
-        case "DEL": 
-            // TODO
-            break; 
-        case "%": 
-            // TODO 
-            break; 
-        case "+": 
-        case "-": 
-        case "/": 
-        case "x":
-            if (acc === "") {
-                acc = curr; 
-                curr = ""; 
-                operator = input; 
-            } else {
-                acc = compute(); // Perform operation with existing operator 
-                curr = ""; 
-                operator = input;
-            }
-            break; 
-        case "=":
-            if (acc !== "" && curr !== "" && operator !== "") {
-                acc = compute(); 
-                curr = ""; 
-                operator = ""; 
-            }  
-            break;
-        case ".":
-            break;
-        default: // number
-            curr += input;
-            break; 
-    }
-    console.log(`acc: ${acc}, curr: ${curr}, operator: ${operator}`);
-    let display = document.querySelector("#display"); 
-    display.textContent = curr === "" ? acc : curr;
-}    
+  switch (input) {
+    case "C":
+      acc = "";
+      curr = "";
+      operator = "";
+      break;
+    case "DEL":
+      // TODO
+      curr = curr.slice(0, -1);
+      break;
+    case "%":
+      // TODO
+      break;
+    case "+":
+    case "-":
+    case "/":
+    case "x":
+      if (curr === "") {
+        operator = input;
+      } else {
+        if (acc === "") {
+          acc = curr;
+          curr = "";
+          operator = input;
+        } else {
+          acc = compute(); // Perform operation with existing operator
+          curr = "";
+          operator = input;
+        }
+      }
+      break;
+    case "=":
+      if (acc !== "" && curr !== "" && operator !== "") {
+        acc = compute();
+        curr = "";
+        operator = "";
+      }
+      break;
+    case ".":
+      break;
+    default: // number
+      curr += input;
+      break;
+  }
+  console.log(`acc: ${acc}, curr: ${curr}, operator: ${operator}`);
+  let display = document.querySelector("#display");
+  if (curr === "" && acc === "") {
+    display.textContent = "0";
+  } else if (curr === "") {
+    display.textContent = acc;
+  } else {
+    display.textContent = curr;
+  }
+}
 
 function compute() {
-    let num1 = parseFloat(acc); 
-    let num2 = parseFloat(curr);
-    switch (operator) {
-        case "+":
-            return add(num1, num2);
-        case "-":
-            return subtract(num1, num2);
-        case "/":
-            return divide(num1, num2); // TODO: Fix division by zero
-        case "x":
-            return multiply(num1, num2); 
-        default:
-            return "error";
-    }
+  let num1 = parseFloat(acc);
+  let num2 = parseFloat(curr);
+  switch (operator) {
+    case "+":
+      return add(num1, num2);
+    case "-":
+      return subtract(num1, num2);
+    case "/":
+      return divide(num1, num2); // TODO: Fix division by zero
+    case "x":
+      return multiply(num1, num2);
+    default:
+      return "error";
+  }
 }

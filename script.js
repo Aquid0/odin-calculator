@@ -3,9 +3,9 @@ const subtract = (x, y) => x - y;
 const multiply = (x, y) => x * y; 
 const divide = (x, y) => x / y;
 
-let inputStack = [null, null, null];
-let curr = 0; 
-
+let acc = ""; 
+let curr = ""; 
+let operator = ""; 
 
 let buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
@@ -13,3 +13,25 @@ buttons.forEach((button) => {
         console.log(button.textContent);
     })
 });
+
+function handleInput(input) {
+    switch (input) {
+        case "C":
+            // TODO 
+            break;
+        case "DEL": 
+            // TODO
+            break; 
+        case "%": 
+            // TODO 
+            break; 
+        case "+": 
+            break; 
+        case "-": 
+            break; 
+        case "/": 
+            break; 
+        case "x":
+            break; 
+    }
+}    

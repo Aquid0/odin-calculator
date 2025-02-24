@@ -52,6 +52,14 @@ body {
     border-color: red;
 }
 
+.screen {
+    padding: 10px;
+    font-size: 50px; 
+    display: flex; 
+    justify-content: flex-end;
+    align-items: center;
+}
+
 button {
     width: 75px; 
     height: 75px; 

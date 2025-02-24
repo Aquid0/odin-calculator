@@ -27,7 +27,9 @@ buttons.forEach((button) => {
 function handleInput(input) {
     switch (input) {
         case "C":
-            // TODO 
+            acc = ""; 
+            curr = "";
+            operator = ""; 
             break;
         case "DEL": 
             // TODO
@@ -48,18 +50,23 @@ function handleInput(input) {
                 curr = ""; 
                 operator = input;
             }
+            break; 
         case "=":
             if (acc !== "" && curr !== "" && operator !== "") {
                 acc = compute(); 
                 curr = ""; 
                 operator = ""; 
             }  
+            break;
         case ".":
             break;
         default: // number
             curr += input;
             break; 
     }
+    console.log(`acc: ${acc}, curr: ${curr}, operator: ${operator}`);
+    let display = document.querySelector("#display"); 
+    display.textContent = curr === "" ? acc : curr;
 }    
 
 function compute() {

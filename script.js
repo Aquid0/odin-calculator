@@ -14,13 +14,29 @@ buttons.forEach((button) => {
   });
 });
 
-/* 
-1. User clicks on a number, append to curr
-2. User clicks on an operator:
-    - If acc is empty, store curr in acc
-    - If acc already exists and curr is not empty, perform operation, store the result in acc
-    - Set new operator 
-*/
+document.addEventListener("keydown", (e) => { 
+  let key = e.key 
+
+  if (key === "*") {
+    key = "x";
+    handleInput(key);
+  }
+
+  if (key === "Backspace") {
+    key = "DEL";
+    handleInput(key);
+  }
+
+  if (key === "Enter" || key === "=") {
+    key = "=";
+    handleInput(key);
+  }
+
+  const validKeys = "0123456789.+-/x";
+  if (validKeys.includes(key)) {
+    handleInput(key);
+  }
+}); 
 
 function handleInput(input) {
   switch (input) {
@@ -30,11 +46,12 @@ function handleInput(input) {
       operator = "";
       break;
     case "DEL":
-      // TODO
       curr = curr.slice(0, -1);
       break;
     case "%":
-      // TODO
+      if (curr !== "") {
+        curr = (parseFloat(curr) / 100).toString();
+      }
       break;
     case "+":
     case "-":
@@ -47,9 +64,11 @@ function handleInput(input) {
           acc = curr;
           curr = "";
           operator = input;
-        } else {
+        } else if (operator !== "") {
           acc = compute(); // Perform operation with existing operator
           curr = "";
+          operator = input;
+        } else if (operator === "") {
           operator = input;
         }
       }
@@ -62,20 +81,32 @@ function handleInput(input) {
       }
       break;
     case ".":
+      if (curr.includes(".")) {
+        break;
+      } else {
+        curr += input
+      }
       break;
     default: // number
       curr += input;
       break;
   }
   console.log(`acc: ${acc}, curr: ${curr}, operator: ${operator}`);
+  display();
+}
+
+function display() {
   let display = document.querySelector("#display");
+  let val = "";
   if (curr === "" && acc === "") {
-    display.textContent = "0";
+    val = "0";
   } else if (curr === "") {
-    display.textContent = acc;
+    val = acc;
   } else {
-    display.textContent = curr;
+    val = curr;
   }
+  val = Math.round(parseFloat(val) * 1e7) / 1e7; 
+  display.textContent = val.toString();
 }
 
 function compute() {
@@ -87,6 +118,9 @@ function compute() {
     case "-":
       return subtract(num1, num2);
     case "/":
+      if (num2 === 0) {
+        return "error";
+      }
       return divide(num1, num2); // TODO: Fix division by zero
     case "x":
       return multiply(num1, num2);
